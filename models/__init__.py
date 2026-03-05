@@ -11,8 +11,18 @@ supabase: Client = None
 def init_supabase(config: Config):
     """Initialize Supabase client"""
     global supabase
-    if config.SUPABASE_URL and config.SUPABASE_KEY:
-        supabase = create_client(config.SUPABASE_URL, config.SUPABASE_KEY)
+    url = config.get('SUPABASE_URL') if isinstance(config, dict) else config.SUPABASE_URL
+key = config.get('SUPABASE_KEY') if isinstance(config, dict) else config.SUPABASE_KEY
+if url and key:
+    supabase = create_client(url, key)
+```
+
+บันทึกแล้วรัน:
+```
+cd /d D:\forced-learning-app\api
+git add models/__init__.py
+git commit -m "Fix config access in models"
+git push origin main
     return supabase
 
 
