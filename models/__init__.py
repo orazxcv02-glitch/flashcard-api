@@ -11,14 +11,17 @@ supabase: Client = None
 def init_supabase(config):
     """Initialize Supabase client"""
     global supabase
-    if isinstance(config, dict):
-        url = config.get('SUPABASE_URL')
-        key = config.get('SUPABASE_KEY')
-    else:
-        url = getattr(config, 'SUPABASE_URL', None)
-        key = getattr(config, 'SUPABASE_KEY', None)
-    if url and key:
-        supabase = create_client(url, key)
+    try:
+        if isinstance(config, dict):
+            url = config.get('SUPABASE_URL')
+            key = config.get('SUPABASE_KEY')
+        else:
+            url = getattr(config, 'SUPABASE_URL', None)
+            key = getattr(config, 'SUPABASE_KEY', None)
+        if url and key:
+            supabase = create_client(url, key)
+    except Exception as e:
+        print(f"Warning: Supabase init failed: {e}")
     return supabase
 
 
