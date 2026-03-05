@@ -1,0 +1,11 @@
+{
+  "name": "flashcard-api",
+  "version": "1.0.0",
+  "description": "Flashcard E-Learning Platform API",
+  "main": "app.py",
+  "scripts": {
+    "dev": "python app.py",
+    "start": "gunicorn app:app"
+  },
+  "dependencies": {}
+}
