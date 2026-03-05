@@ -8,21 +8,17 @@ from config import Config
 supabase: Client = None
 
 
-def init_supabase(config: Config):
+def init_supabase(config):
     """Initialize Supabase client"""
     global supabase
-    url = config.get('SUPABASE_URL') if isinstance(config, dict) else config.SUPABASE_URL
-key = config.get('SUPABASE_KEY') if isinstance(config, dict) else config.SUPABASE_KEY
-if url and key:
-    supabase = create_client(url, key)
-```
-
-บันทึกแล้วรัน:
-```
-cd /d D:\forced-learning-app\api
-git add models/__init__.py
-git commit -m "Fix config access in models"
-git push origin main
+    if isinstance(config, dict):
+        url = config.get('SUPABASE_URL')
+        key = config.get('SUPABASE_KEY')
+    else:
+        url = getattr(config, 'SUPABASE_URL', None)
+        key = getattr(config, 'SUPABASE_KEY', None)
+    if url and key:
+        supabase = create_client(url, key)
     return supabase
 
 
